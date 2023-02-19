@@ -5,55 +5,157 @@ interface Props {
   createdAt: string;
   score: number;
   content: string;
+  isAdmin?: boolean;
 }
 
-const { name, image, createdAt, score, content } = Astro.props;
+const { name, image, createdAt, score, content, isAdmin = false } = Astro.props;
 ---
 
 <article
   class="m-4 #fff xl:w-[55%] lg:w-[65%] md:w-[80%] w-[100%] rounded-lg flex gap-7 justify-between p-6 items-center bg-white"
 >
   <div
-    class="flex justify-center items-center flex-col gap-4 bg-back px-4 py-2 rounded-xl text-lg font-bold"
+    class="hidden sm:flex justify-center items-center flex-col gap-4 bg-back p-4 rounded-xl text-lg font-bold"
   >
-    <span
-      class="text-2xl text-gray-300 hover:cursor-pointer duration-300 hover:text-violet"
-      >+</span
-    >
+    <div class="fill-container">
+      <img
+        src="/images/icon-plus.svg"
+        class="hover:cursor-pointer duration-300 fill-current"
+        alt="Plus Icon"
+      />
+    </div>
     <span class="text-violet">{score}</span>
-    <span
-      class="text-2xl text-gray-300 hover:cursor-pointer duration-300 hover:text-violet"
-      >-</span
-    >
+    <div class="fill-container">
+      <img
+        src="/images/icon-minus.svg"
+        class="hover:cursor-pointer duration-300 hover:fill-red-500"
+        alt="Minus Icon"
+      />
+    </div>
   </div>
 
-  <div class="flex justify-center flex-col items-center flex-1 gap-4">
+  <div class="flex justify-center flex-col items-stretch flex-1 gap-4">
     <div class="w-full flex justify-between items-center">
-      <div class="flex justify-center items-center gap-3">
-        <img src={image} alt={name} class="w-10 h-10" />
-        <span class="text-gray-600 font-bold text-lg">{name}</span>
+      <div
+        class="flex justify-between sm:justify-start flex-1 items-start sm:gap-3"
+      >
+        <div class="flex justify-center items-start gap-3">
+          <img src={image} alt={name} class="w-10 h-10" />
+          <span class="text-gray-600 font-bold text-lg">{name}</span>
+        </div>
         <span class="text-[#777]">{createdAt}</span>
       </div>
-      <div
-        class="replay-btn flex justify-center items-center gap-2 group self-start"
-      >
-        <img
-          src="/images/icon-reply.svg"
-          alt="Replay Icons"
-          class="w-4 h-4 group-hover:opacity-60 duration-300 group-hover:cursor-pointer"
-        />
-        <span
-          class="text-violet font-semibold text-md group-hover:opacity-60 duration-300 group-hover:cursor-pointer"
-          >Replay</span
-        >
-      </div>
+      {
+        isAdmin ? (
+          <div class="hidden sm:flex justify-end items-center gap-4">
+            <div class="replay-btn flex justify-center items-center gap-2 group self-start">
+              <img
+                src="/images/icon-delete.svg"
+                alt="Delete Icon"
+                class="w-4 h-4 group-hover:opacity-60 duration-300 group-hover:cursor-pointer"
+              />
+              <span class="text-red-600 font-semibold text-md group-hover:opacity-60 duration-300 group-hover:cursor-pointer">
+                Delete
+              </span>
+            </div>
+            <div class="replay-btn flex justify-center items-center gap-2 group self-start">
+              <img
+                src="/images/icon-reply.svg"
+                alt="Replay Icon"
+                class="w-4 h-4 group-hover:opacity-60 duration-300 group-hover:cursor-pointer"
+              />
+              <span class="text-violet font-semibold text-md group-hover:opacity-60 duration-300 group-hover:cursor-pointer">
+                Edit
+              </span>
+            </div>
+          </div>
+        ) : (
+          <div class="replay-btn hidden sm:flex justify-center items-center gap-2 group self-start">
+            <img
+              src="/images/icon-reply.svg"
+              alt="Replay Icons"
+              class="w-4 h-4 group-hover:opacity-60 duration-300 group-hover:cursor-pointer"
+            />
+            <span class="text-violet font-semibold text-md group-hover:opacity-60 duration-300 group-hover:cursor-pointer">
+              Replay
+            </span>
+          </div>
+        )
+      }
     </div>
 
-    <p class="text-gray-500 text-md">
+    <p class="text-gray-500 text-md break-all">
       {content}
     </p>
+
+    <div class="flex sm:hidden justify-between items-center">
+      <div
+        class="flex justify-center items-center gap-4 bg-back px-4 py-2 rounded-xl text-lg font-bold"
+      >
+        <div class="fill-container">
+          <img
+            src="/images/icon-plus.svg"
+            class="hover:cursor-pointer duration-300 fill-current"
+            alt="Plus Icon"
+          />
+        </div>
+        <span class="text-violet">{score}</span>
+
+        <div class="fill-container">
+          <img
+            src="/images/icon-minus.svg"
+            class="hover:cursor-pointer duration-300 hover:fill-red-500"
+            alt="Minus Icon"
+          />
+        </div>
+      </div>
+
+      {
+        isAdmin ? (
+          <div class="flex sm:hidden justify-end items-center gap-4">
+            <div class="replay-btn flex justify-center items-center gap-2 group self-start">
+              <img
+                src="/images/icon-delete.svg"
+                alt="Delete Icon"
+                class="w-4 h-4 group-hover:opacity-60 duration-300 group-hover:cursor-pointer"
+              />
+              <span class="text-red-600 font-semibold text-md group-hover:opacity-60 duration-300 group-hover:cursor-pointer">
+                Delete
+              </span>
+            </div>
+            <div class="replay-btn flex justify-center items-center gap-2 group self-start">
+              <img
+                src="/images/icon-reply.svg"
+                alt="Replay Icon"
+                class="w-4 h-4 group-hover:opacity-60 duration-300 group-hover:cursor-pointer"
+              />
+              <span class="text-violet font-semibold text-md group-hover:opacity-60 duration-300 group-hover:cursor-pointer">
+                Edit
+              </span>
+            </div>
+          </div>
+        ) : (
+          <div class="replay-btn flex sm:hidden justify-center items-center gap-2 group ">
+            <img
+              src="/images/icon-reply.svg"
+              alt="Replay Icons"
+              class="w-4 h-4 group-hover:opacity-60 duration-300 group-hover:cursor-pointer"
+            />
+            <span class="text-violet font-semibold text-md group-hover:opacity-60 duration-300 group-hover:cursor-pointer">
+              Replay
+            </span>
+          </div>
+        )
+      }
+    </div>
   </div>
 </article>
+
+<style>
+  .fill-container:hover .fill-current {
+    fill: red !important;
+  }
+</style>
 
 <script>
   const replayBtn: HTMLDivElement = document.querySelector(".replay-btn")!;
